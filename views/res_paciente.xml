@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="view_res_paciente_tree">
+      <field name="name">res.paciente.tree</field>
+      <field name="model">res.paciente</field>
+      <field name="arch" type="xml">
+        <tree editable="bottom" decoration-danger="(presion&gt;100) or (presion&lt;60) or (oxigeno&lt;95)">
+          <field name="res_paciente"/>
+          <field name="create_date" string="Fecha" />
+          <field name="presion"/>
+          <field name="oxigeno"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_res_paciente_graph">
+      <field name="name">res.paciente.graph</field>
+      <field name="model">res.paciente</field>
+      <field name="type">graph</field>
+      <field name="arch" type="xml">
+        <graph string="Signos Vitales" orientation="vertical" stacked="False" type="bar" interval="day">
+          <field name="res_paciente" group="True"/>
+          <field name="presion" type="measure" />
+          <field name="oxigeno" type="measure" />
+          <field name="create_date" group="True" />
+        </graph>
+      </field>
+    </record>
+
+    <record id="view_res_paciente_search" model="ir.ui.view">
+      <field name="name">res.paciente.search</field>
+      <field name="model">res.paciente</field>
+      <field name="arch" type="xml">
+        <search string="Buscar Paciente">
+          <field name="res_paciente" domain="[('res_paciente.paciente', '=', True)]" />
+          <group string="Group By">
+            <filter string="Paciente" name="groupby_res_paciente" domain="[('res_paciente.paciente', '=', True)]" context="{'group_by': 'res_paciente'}"/>
+            <filter string="Creado en" name="groupby_create_date" domain="[]" context="{'group_by':'create_date:day'}"/>
+            <filter string="Oxigeno" name="groupby_oxigeno" domain="[]" context="{'group_by':'oxigeno'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <record id="action_res_paciente_open" model="ir.actions.act_window">
+      <field name="name">Pacientes</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.paciente</field>
+      <field name="view_mode">tree,graph</field>
+      <field name="context">{'search_default_groupby_oxigeno': 1, 'search_default_groupby_create_date': 1}</field>
+    </record>
+
+    <menuitem id="res_paciente_sub_menu" parent="base.menu_users" name="Datos Paciente" action="action_res_paciente_open" />
+
+  </data>
+</odoo>

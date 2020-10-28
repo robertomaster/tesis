@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_tesis_dispositivos_tree">
+            <field name="name">tesis.dispositivos.tree</field>
+            <field name="model">tesis.dispositivos</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="codigo"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tesis_dispositivos_from" model="ir.ui.view">
+            <field name="name">tesis.dispositivos.form</field>
+            <field name="model">tesis.dispositivos</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="codigo" />
+                        </group>
+                        <notebook>
+                            <page string="Pacientes">
+                                <field name="res_paciente_ids" readonly="1">
+                                    <tree>
+                                        <field name="name" />
+                                        <field name="edad" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_tesis_dispositivos_open" model="ir.actions.act_window">
+            <field name="name">Dispositivos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tesis.dispositivos</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="dispositivos_sub_menu" parent="tesis_menu_root" name="Dispositivos" action="action_tesis_dispositivos_open" groups="base.user_admin" />
+
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tesis_res_paciente,access_tesis_res_paciente,model_res_paciente,base.user_admin,1,1,1,1
+access_tesis_prescripcion,access_tesis_prescripcion,model_tesis_prescripcion,base.user_admin,1,1,1,1
+access_tesis_dispositivos,access_tesis_dispositivos,model_tesis_dispositivos,base.user_admin,1,1,1,1
+access_tesis_notificaciones,access_tesis_notificaciones,model_tesis_notificaciones,base.user_admin,1,1,1,1
+
+access_tesis_res_partner_monitor,access_tesis_res_partner_monitor,model_res_partner,tesis.group_monitor_tesis,1,0,0,0
+access_tesis_res_paciente_monitor,access_tesis_res_paciente_monitor,model_res_paciente,tesis.group_monitor_tesis,1,0,0,0
+access_tesis_prescripcion_monitor,access_tesis_prescripcion_monitor,model_tesis_prescripcion,tesis.group_monitor_tesis,1,1,1,0
+access_tesis_notificaciones_monitor,access_tesis_notificaciones_monitor,model_tesis_notificaciones,tesis.group_monitor_tesis,1,0,0,0
+access_tesis_dispositivos_monitor,access_tesis_dispositivos_monitor,model_tesis_dispositivos,tesis.group_monitor_tesis,1,0,0,0

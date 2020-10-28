@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_monitor_tesis" model="res.groups">
+        <field name="name">Monitores</field>
+    </record>
+
+    <record model="ir.ui.menu" id="website.menu_website_configuration">
+        <field name="groups_id" eval="[(6, 0, [ref('base.user_admin')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="mail.menu_root_discuss">
+        <field name="groups_id" eval="[(6, 0, [ref('base.user_admin')])]"/>
+    </record>
+
+    <data noupdate="1">
+        <record model="ir.rule" id="tesis_prescripcion_rule">
+            <field name="name">tesis.prescripcion: leer prescripcion por usuario logeado</field>
+            <field name="model_id" ref="tesis.model_tesis_prescripcion"/>
+            <field name="domain_force">[('res_user', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_monitor_tesis'))]"/>
+        </record>
+    </data>
+
+</odoo>
+
+

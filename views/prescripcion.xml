@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_tesis_prescripcioe_tree">
+            <field name="name">tesis.prescripcion.tree</field>
+            <field name="model">tesis.prescripcion</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc" decoration-info="estado == 'draft'" decoration-success="estado == 'send'">
+                    <field name="res_paciente"/>
+                    <field name="create_date" string="Fecha" />
+                    <field name="res_user" groups="base.user_admin" />
+                    <field name="estado"/>
+                    <field name="mensaje_leido" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_tesis_prescripcion_from" model="ir.ui.view">
+            <field name="name">tesis.prescripcion.form</field>
+            <field name="model">tesis.prescripcion</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="accion_enviar_mensaje" attrs="{'invisible': [('estado', '=', 'send')]}" string="Enviar Mensaje" type="object" class="oe_highlight"/>
+                        <field name="estado" widget="statusbar" statusbar_visible="draft,send"/>
+                    </header>
+                    <sheet>
+                        <group col="2">
+                            <group>
+                                <field name="res_paciente" context="{'default_res_paciente': res_paciente}" attrs="{'readonly': [('estado', '=', 'send')]}" options="{'no_create': True, 'no_create_edit':True}" required="1" />
+                                <field name="res_user" groups="base.user_admin" />
+                                <field name="mensaje_leido" readonly="1" />
+                                <field name="notificacion" context="{'default_notificacion': notificacion}" attrs="{'readonly': [('estado', '=', 'send')]}" options="{'no_create': True, 'no_create_edit':True}" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Mensaje">
+                                <field name="mensaje" nolabel="1" attrs="{'readonly': [('estado', '=', 'send')]}" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_tesis_prescripcio_open" model="ir.actions.act_window">
+            <field name="name">Prescripciones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tesis.prescripcion</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="tesis_prescripcion_sub_menu" parent="tesis_menu_root" name="Prescripciones" action="action_tesis_prescripcio_open" groups="base.user_admin,group_monitor_tesis" />
+
+    </data>
+</odoo>
