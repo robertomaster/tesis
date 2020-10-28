@@ -10,10 +10,7 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     edad = fields.Integer(string='Edad')
-    #presion = fields.Integer(string='Presion')
-    #oxigeno = fields.Integer(string='Oxigeno')
     paciente = fields.Boolean(string='Paciente', default=False)
-    #medico = fields.Char(string='Medico')
     res_paciente_ids = fields.One2many(
         'res.paciente', 'res_paciente', string='Detalles', copy=True)
     dispositivo = fields.Many2one(
