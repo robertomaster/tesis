@@ -34,15 +34,12 @@
                 </form>
             </field>
         </record>
-
         <record id="action_tesis_dispositivos_open" model="ir.actions.act_window">
             <field name="name">Dispositivos</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">tesis.dispositivos</field>
             <field name="view_mode">tree,form</field>
         </record>
-
         <menuitem id="dispositivos_sub_menu" parent="tesis_menu_root" name="Dispositivos" action="action_tesis_dispositivos_open" groups="base.user_admin" />
-
     </data>
 </odoo>
