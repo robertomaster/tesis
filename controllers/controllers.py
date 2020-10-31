@@ -120,7 +120,7 @@ class TesisController(http.Controller):
         paciente = request.env['res.paciente'].create(values)
         user = request.env["res.partner"].search(
             [("id", "=", values["res_paciente"])])
-        if values.get('oxigeno') < 95 or values.get('presion') > 100:
+        if values.get('oxigeno') < 95 or values.get('presion') > 100 or values.get('presion') < 60:
             mensaje = 'El paciente '+user.name+", tiene los signos vitales. BPMs: " + \
                 str(values.get("presion")) + ", SpO2: " + \
                 str(values.get("oxigeno"))
