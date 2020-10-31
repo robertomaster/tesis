@@ -16,7 +16,7 @@ class TesisController(http.Controller):
         ]
         return werkzeug.wrappers.Response(body, headers=headers)
 
-    @http.route(['/api/datos/<string:idDispositivo>', '/api/signos/<int:partner_id>'], auth='public', type='http', csrf=False, methods=["GET"], cors="*")
+    @http.route(['/api/datos/<string:idDispositivo>', '/api/paciente/<int:partner_id>'], auth='public', type='http', csrf=False, methods=["GET"], cors="*")
     def get_data(self, partner_id=False, idDispositivo=False, **kw):
         if partner_id:
             paciente = request.env["res.partner"].sudo().search(
