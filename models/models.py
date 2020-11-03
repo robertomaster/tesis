@@ -70,7 +70,7 @@ class Prescripcion(models.Model):
 
     def accion_enviar_mensaje(self):
         try:
-            ws = create_connection("ws://18.222.17.116:8701")
+            ws = create_connection("ws://18.222.17.116:80")
             data = {
                 'tipo': 'notificacion',
                 'titulo': 'Prescripción',
