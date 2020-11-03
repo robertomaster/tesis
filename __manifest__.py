@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', "mail", "web_notify"],
+    'depends': ['base', "mail", "web_notify", "website"],
 
     # always loaded
     'data': [
