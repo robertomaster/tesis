@@ -114,7 +114,7 @@ class TesisController(http.Controller):
     @http.route('/api/datosPaciente', auth='public', type='json', csrf=False, methods=["POST"])
     def registrar_datos_paciente(self, **kw):
         request.session.authenticate(
-            request.session.db, "roberto.andres.master@gmail.com", "root")
+            request.session.db, "roberto.andres.master@gmail.com", "AndroidTVtesis1")
         values = request.httprequest.data and json.loads(
             request.httprequest.data.decode('utf-8')) or {}
         paciente = request.env['res.paciente'].create(values)
