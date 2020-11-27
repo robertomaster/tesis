@@ -34,7 +34,7 @@ class TesisController(http.Controller):
             dispositivo = request.env['tesis.dispositivos'].sudo().search(
                 [('codigo', '=', idDispositivo)])
             pacientes = request.env["res.partner"].sudo().search(
-                [('paciente', '=', True), ('dispositivo', '=', dispositivo.id)])
+                [('paciente', '=', True), ('dispositivo', '=', dispositivo.id), ('activo', '=', True)])
             for paciente in pacientes:
                 todos_pacientes.append({
                     "id": paciente.id,
@@ -50,6 +50,7 @@ class TesisController(http.Controller):
         values = request.httprequest.data and json.loads(
             request.httprequest.data.decode('utf-8')) or {}
         if request.httprequest.method in ["PUT"]:
+            values["activo"] = True
             paciente = request.env["res.partner"].sudo().search(
                 [("id", "=", values["id"])])
             del values["id"]
@@ -66,19 +67,27 @@ class TesisController(http.Controller):
                       'paciente': nuevo_paciente_result, 'success': True}
             return result
         else:
-            values["paciente"] = True
             dispositivo = request.env['tesis.dispositivos'].sudo().search(
                 [('codigo', '=', values.get('idDispositivo'))])
             values["dispositivo"] = dispositivo.id
+            paciente = request.env["res.partner"].sudo().search(
+                [("dispositivo", "=", dispositivo.id), ("name", "=", values.get("name"))])
             del values["idDispositivo"]
-            paciente = request.env["res.partner"].sudo().create(values)
-            nuevo_paciente_result = {
-                "nombre": paciente.name,
-                "edad": paciente.edad,
-            }
-            result = {'mensaje': 'Pacientes creado',
-                      'paciente': nuevo_paciente_result, 'success': True}
-            return result
+            if paciente:
+                paciente.write({'activo': True})
+                result = {'success': True}
+                return result
+            else:
+                values["paciente"] = True
+                values["activo"] = True
+                pac = request.env["res.partner"].sudo().create(values)
+                nuevo_paciente_result = {
+                    "nombre": pac.name,
+                    "edad": pac.edad,
+                }
+                result = {'mensaje': 'Pacientes creado',
+                          'paciente': nuevo_paciente_result, 'success': True}
+                return result
 
     @http.route('/api/correo', auth='public', type='json', csrf=False, methods=["POST"])
     def data(self, **kw):
@@ -96,7 +105,7 @@ class TesisController(http.Controller):
             request.httprequest.data.decode('utf-8')) or {}
         request.env.uid = SUPERUSER_ID
         user = request.env["res.partner"].search([("id", "=", values["id"])])
-        user.unlink()
+        user.write({'activo': False})
         result = {'success': True}
         return result
 

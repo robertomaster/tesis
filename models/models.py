@@ -10,14 +10,12 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     edad = fields.Integer(string='Edad')
-    #presion = fields.Integer(string='Presion')
-    #oxigeno = fields.Integer(string='Oxigeno')
     paciente = fields.Boolean(string='Paciente', default=False)
-    #medico = fields.Char(string='Medico')
     res_paciente_ids = fields.One2many(
         'res.paciente', 'res_paciente', string='Detalles', copy=True)
     dispositivo = fields.Many2one(
         'tesis.dispositivos', string='Dispositivos', ondelete='cascade', index=True)
+    activo = fields.Boolean(string='Activo', default=True)
 
     def button_ver_grafica(self):
         return {
@@ -73,7 +71,7 @@ class Prescripcion(models.Model):
 
     def accion_enviar_mensaje(self):
         try:
-            ws = create_connection("ws://18.222.17.116:8701")
+            ws = create_connection("ws://18.222.17.116:80")
             data = {
                 'tipo': 'notificacion',
                 'titulo': 'Prescripción',
