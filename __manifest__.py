@@ -20,12 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', "mail", "web_notify"],
+    'depends': ['base', "mail", "web_notify", "website"],
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
         'security/security.xml',
+        'security/ir.model.access.csv',
         'views/sequence.xml',
         'views/views.xml',
         'views/res_paciente.xml',

@@ -16,7 +16,7 @@ class TesisController(http.Controller):
         ]
         return werkzeug.wrappers.Response(body, headers=headers)
 
-    @http.route(['/api/datos/<string:idDispositivo>', '/api/signos/<int:partner_id>'], auth='public', type='http', csrf=False, methods=["GET"], cors="*")
+    @http.route(['/api/datos/<string:idDispositivo>', '/api/paciente/<int:partner_id>'], auth='public', type='http', csrf=False, methods=["GET"], cors="*")
     def get_data(self, partner_id=False, idDispositivo=False, **kw):
         if partner_id:
             paciente = request.env["res.partner"].sudo().search(
@@ -123,13 +123,13 @@ class TesisController(http.Controller):
     @http.route('/api/datosPaciente', auth='public', type='json', csrf=False, methods=["POST"])
     def registrar_datos_paciente(self, **kw):
         request.session.authenticate(
-            request.session.db, "roberto.andres.master@gmail.com", "root")
+            request.session.db, "roberto.andres.master@gmail.com", "AndroidTVtesis1")
         values = request.httprequest.data and json.loads(
             request.httprequest.data.decode('utf-8')) or {}
         paciente = request.env['res.paciente'].create(values)
         user = request.env["res.partner"].search(
             [("id", "=", values["res_paciente"])])
-        if values.get('oxigeno') < 95 or values.get('presion') > 100:
+        if values.get('oxigeno') < 95 or values.get('presion') > 100 or values.get('presion') < 60:
             mensaje = 'El paciente '+user.name+", tiene los signos vitales. BPMs: " + \
                 str(values.get("presion")) + ", SpO2: " + \
                 str(values.get("oxigeno"))
